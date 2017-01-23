@@ -3,17 +3,17 @@ require 'date'
 class Account
   attr_reader :balance, :transactions
 
-  def initialize(args)
+  def initialize(args = {})
     @balance = args.fetch(:balance, 0)
     @transactions = []
   end
 
-  def withdraw(amount, transaction_klass)
+  def withdraw(amount, transaction_klass = Transaction)
     self.balance -= amount
     create_transaction({debit: amount}, transaction_klass)
   end
 
-  def deposit(amount, transaction_klass)
+  def deposit(amount, transaction_klass = Transaction)
     self.balance += amount
     create_transaction({credit: amount}, transaction_klass)
   end
