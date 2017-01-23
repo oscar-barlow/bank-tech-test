@@ -14,4 +14,8 @@ describe StatementFormatter do
     expect(statement.transactions).to_not be_empty
   end
 
+  it 'should sort the transactions reverse chronologically' do
+    expect(statement.sort_transactions[0]).to eq withdrawal
+  end
+
 end
