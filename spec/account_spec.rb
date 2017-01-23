@@ -64,9 +64,9 @@ describe Account do
 
   describe '#statement' do
 
-    let!(:deposit) { double(amount: 1000, date: Date.new(2012,1,10), account_balance: 1000) }
-    let!(:big_deposit) { double(amount: 2000, date: Date.new(2012,1,13), account_balance: 3000) }
-    let!(:withdrawal) { double(amount: 1000, date: Date.new(2012,1,14), account_balance: 2500) }
+    let!(:deposit) { double(amount: 1000.00, date: Date.new(2012,1,10), account_balance: 1000.00, type: :credit) }
+    let!(:big_deposit) { double(amount: 2000.00, date: Date.new(2012,1,13), account_balance: 3000.00, type: :credit) }
+    let!(:withdrawal) { double(amount: 1000.00, date: Date.new(2012,1,14), account_balance: 2500.00, type: :debit) }
 
     let!(:busy_account) { described_class.new({}) }
 

@@ -23,6 +23,22 @@ class Account
     self.transactions << transaction
   end
 
+  def statement
+    statement = "date       || credit || debit   || balance\n"
+
+    transactions.each do |transaction|
+      line = ""
+      if transaction.type == :credit
+        line += "#{transaction.date.strftime('%d/%m/%Y')} || #{transaction.amount}||         || #{transaction.account_balance}\n"
+      else
+        line += "#{transaction.date.strftime('%d/%m/%Y')} ||         || #{transaction.amount}|| #{transaction.account_balance}\n"
+      end
+      statement += line
+    end
+    
+    statement
+  end
+
   private
     attr_writer :balance, :transactions
 
