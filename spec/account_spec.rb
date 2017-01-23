@@ -15,6 +15,10 @@ describe Account do
       expect(account.balance).to eq 1000
     end
 
+    it 'should initialize with an empty transactions array' do
+      expect(account.transactions).to be_empty
+    end
+
   end
 
   describe '#withdraw' do

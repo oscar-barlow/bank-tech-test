@@ -1,8 +1,9 @@
 class Account
-  attr_reader :balance
+  attr_reader :balance, :transactions
 
   def initialize(args)
     @balance = args.fetch(:balance, 0)
+    @transactions = []
   end
 
   def withdraw(amount)
