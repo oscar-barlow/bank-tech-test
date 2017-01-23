@@ -2,28 +2,31 @@ require 'account'
 
 describe Account do
 
-  context 'account has no money' do
+  let!(:account) { described_class.new(balance: 1000) }
 
-    let!(:empty_account) {described_class.new({}) }
+  describe '#initialize' do
 
-    it 'should initialize with a default balance of zero' do
+    it 'initialize with a default balance of zero' do
+      empty_account = Account.new({})
       expect(empty_account.balance).to eq 0
     end
-
-  end
-
-  context 'account has money' do
-
-    let!(:account) { described_class.new(balance: 1000) }
 
     it 'should be possible to initialize an account with a balance' do
       expect(account.balance).to eq 1000
     end
 
+  end
+
+  describe '#withdraw' do
+
     it 'should be possible to withdraw money' do
       account.withdraw(100)
       expect(account.balance).to eq 900
     end
+
+  end
+
+  describe '#deposit' do
 
     it 'should be possible to deposit money' do
       account.deposit(500)
