@@ -1,8 +1,12 @@
 # Bank Tech Test
 
 ## Brief
-Create an app, usable though a REPL, that implements a very-much-simplified banking interface;
-and that prints out a statement in a very particular format.
+Create an app, usable though a REPL, that implements a very-much-simplified banking interface:
+
+* You should be able to interact with the your code via a REPL like IRB or the JavaScript console. (You don't need to implement a command line interface that takes input from STDIN.)
+* Deposits, withdrawal.
+* Account statement (date, amount, balance) printing.
+* Data can be kept in memory (it doesn't need to be stored to a database or anything).
 
 ## User Stories
 
