@@ -25,6 +25,11 @@ describe Account do
       expect(account.balance).to eq 900
     end
 
+    it 'should be possible to deposit money' do
+      account.deposit(500)
+      expect(account.balance).to eq 1500
+    end
+
   end
 
 end
