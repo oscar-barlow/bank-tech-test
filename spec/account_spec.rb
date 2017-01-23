@@ -2,6 +2,7 @@ require 'account'
 
 describe Account do
 
+  let!(:transaction_spy) { spy("A Transaction") }
   let!(:account) { described_class.new(balance: 1000) }
 
   describe '#initialize' do
@@ -24,8 +25,18 @@ describe Account do
   describe '#withdraw' do
 
     it 'should be possible to withdraw money' do
-      account.withdraw(100)
+      account.withdraw(100, transaction_spy)
       expect(account.balance).to eq 900
+    end
+
+    it 'should make a new entry in the transactions array' do
+      account.withdraw(100, transaction_spy)
+      expect(account.transactions.length).to eq 1
+    end
+
+    it 'should send transaction details to the transactions array' do
+      account.withdraw(100, transaction_spy)
+      expect(transaction_spy).to have_received(:new).with(amount: 100, date: Date.today, account_balance: 900)
     end
 
   end
