@@ -58,17 +58,38 @@ describe Account do
 
   end
 
-  describe '#statement' do
+  describe '#create_statement' do
 
     let!(:deposit) { double(credit: 1000.00, debit: nil, date: Date.new(2012,1,10), account_balance: 1000.00) }
     let!(:big_deposit) { double(credit: 2000.00, debit: nil, date: Date.new(2012,1,13), account_balance: 3000.00) }
     let!(:withdrawal) { double(credit: nil, debit: 500.00, date: Date.new(2012,1,14), account_balance: 2500.00) }
 
+    let!(:formatter_spy) { spy("A formatter spy") }
+
     let!(:busy_account) { described_class.new({}) }
 
-    it 'should output a nicely formatted statement' do
+    it 'should create a new StatementFormatter object' do
       busy_account.transactions.push(deposit, big_deposit, withdrawal)
-      expect(busy_account.statement).to eq "date       || credit || debit   || balance\n14/01/2012 ||        || 500.00  || 2500.00 \n13/01/2012 || 2000.00||         || 3000.00 \n10/01/2012 || 1000.00||         || 1000.00 \n"
+      busy_account.create_statement(formatter_spy)
+      expect(formatter_spy).to have_received(:new).with(busy_account.transactions)
+    end
+
+  end
+
+  describe '#print_statement' do
+
+    let!(:deposit) { double(credit: 1000.00, debit: nil, date: Date.new(2012,1,10), account_balance: 1000.00) }
+    let!(:big_deposit) { double(credit: 2000.00, debit: nil, date: Date.new(2012,1,13), account_balance: 3000.00) }
+    let!(:withdrawal) { double(credit: nil, debit: 500.00, date: Date.new(2012,1,14), account_balance: 2500.00) }
+
+    let!(:formatter_spy) { spy("A formatter spy") }
+
+    let!(:busy_account) { described_class.new({}) }
+
+    it 'should send the print message to the statement formatter' do
+      busy_account.transactions.push(deposit, big_deposit, withdrawal)
+      busy_account.print_statement(formatter_spy)
+      expect(formatter_spy).to have_received(:print)
     end
 
   end

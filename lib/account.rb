@@ -23,38 +23,12 @@ class Account
     self.transactions << transaction
   end
 
-  def statement
+  def create_statement(statement_formatter_klass)
+    statement_formatter_klass.new(self.transactions)
+  end
 
-    sorted_transactions = self.transactions.sort_by { |transaction| transaction.date }.reverse
-
-    statement = "date       || credit || debit   || balance\n"
-
-    sorted_transactions.each do |transaction|
-      row = []
-      date = "#{transaction.date.strftime("%d/%m/%Y")}".ljust(11) + "||"
-      row << date
-      if transaction.credit
-        amount = sprintf("%.2f", "#{transaction.credit}")
-        credit = "#{amount}".rjust(8) + "||"
-        row << credit
-      else
-        row << "        ||"
-      end
-      if transaction.debit
-        amount = sprintf("%.2f", "#{transaction.debit}")
-        credit = " #{amount}".ljust(9) + "||"
-        row << credit
-      else
-        row << "         ||"
-      end
-      amount = sprintf("%.2f", "#{transaction.account_balance}")
-      balance = " #{amount}".ljust(9)
-      row << balance
-      row << "\n"
-      row = row.join
-      statement += row
-    end
-    statement
+  def print_statement(statement_formatter_klass)
+    create_statement(statement_formatter_klass).print
   end
 
   private
