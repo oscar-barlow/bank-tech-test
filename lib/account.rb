@@ -4,7 +4,7 @@ class Account
   attr_reader :balance, :transactions
 
   def initialize(args)
-    @balance = args.fetch(:balance, 0).to_f
+    @balance = args.fetch(:balance, 0)
     @transactions = []
   end
 
@@ -24,18 +24,36 @@ class Account
   end
 
   def statement
+
+    sorted_transactions = self.transactions.sort_by { |transaction| transaction.date }.reverse
+
     statement = "date       || credit || debit   || balance\n"
 
-    transactions.each do |transaction|
-      line = ""
-      if transaction.type == :credit
-        line += "#{transaction.date.strftime('%d/%m/%Y')} || #{transaction.amount}||         || #{transaction.account_balance}\n"
+    sorted_transactions.each do |transaction|
+      row = []
+      date = "#{transaction.date.strftime("%d/%m/%Y")}".ljust(11) + "||"
+      row << date
+      if transaction.credit
+        amount = sprintf("%.2f", "#{transaction.credit}")
+        credit = "#{amount}".rjust(8) + "||"
+        row << credit
       else
-        line += "#{transaction.date.strftime('%d/%m/%Y')} ||         || #{transaction.amount}|| #{transaction.account_balance}\n"
+        row << "        ||"
       end
-      statement += line
+      if transaction.debit
+        amount = sprintf("%.2f", "#{transaction.debit}")
+        credit = " #{amount}".ljust(9) + "||"
+        row << credit
+      else
+        row << "         ||"
+      end
+      amount = sprintf("%.2f", "#{transaction.account_balance}")
+      balance = " #{amount}".ljust(9)
+      row << balance
+      row << "\n"
+      row = row.join
+      statement += row
     end
-
     statement
   end
 
