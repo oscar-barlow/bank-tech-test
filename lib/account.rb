@@ -27,7 +27,7 @@ class Account
     statement_formatter_klass.new(self.transactions)
   end
 
-  def print_statement(statement_formatter_klass)
+  def print_statement(statement_formatter_klass = StatementFormatter)
     create_statement(statement_formatter_klass).print
   end
 
