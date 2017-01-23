@@ -3,7 +3,7 @@ require 'transaction'
 describe Transaction do
 
   let!(:day) { double("Day of the transaction") }
-  let!(:transaction) { described_class.new(amount: 300, date: day, account_balance: 700) }
+  let!(:transaction) { described_class.new(amount: 300, date: day, account_balance: 700, type: :debit) }
 
   describe '#initialize' do
 
@@ -17,6 +17,10 @@ describe Transaction do
 
     it 'should initialize with the account balance' do
       expect(transaction.account_balance).to eq 700
+    end
+
+    it 'should know if it\'s a debit transaction' do
+      expect(transaction.type).to eq :debit
     end
 
   end
