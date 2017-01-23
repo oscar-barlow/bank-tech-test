@@ -5,4 +5,11 @@ class Account
     @balance = args.fetch(:balance, 0)
   end
 
+  def withdraw(amount)
+    self.balance -= amount
+  end
+
+  private
+    attr_writer :balance
+
 end
