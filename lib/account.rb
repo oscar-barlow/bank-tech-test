@@ -13,8 +13,9 @@ class Account
     create_transaction(amount, transaction_klass)
   end
 
-  def deposit(amount)
+  def deposit(amount, transaction_klass)
     self.balance += amount
+    create_transaction(amount, transaction_klass)
   end
 
   def create_transaction(amount, transaction_klass)
