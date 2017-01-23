@@ -16,6 +16,10 @@ describe Account do
       expect(account.balance).to eq 1000
     end
 
+    it 'should have a balance stored as a float' do
+      expect(account.balance).to be_a Float
+    end
+
     it 'should initialize with an empty transactions array' do
       expect(account.transactions).to be_empty
     end
@@ -54,6 +58,20 @@ describe Account do
 
     it 'should send transaction details to the transactions array' do
       expect(transaction_spy).to have_received(:new).with(amount: 500, date: Date.today, account_balance: 1500)
+    end
+
+  end
+
+  describe '#statement' do
+
+    let!(:deposit) { double(amount: 1000, date: Date.new(2012,1,10), account_balance: 1000) }
+    let!(:big_deposit) { double(amount: 2000, date: Date.new(2012,1,13), account_balance: 3000) }
+    let!(:withdrawal) { double(amount: 1000, date: Date.new(2012,1,14), account_balance: 2500) }
+
+    let!(:busy_account) { described_class.new({}) }
+
+    xit 'should output a nicely formatted statement' do
+      expect(busy_account.statement).to eq
     end
 
   end
