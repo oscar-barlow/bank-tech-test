@@ -4,7 +4,7 @@
 
 ### DONE
 
-### WIP
+### TODO
 
 As a user,
 So that I can know how much money I have
