@@ -58,7 +58,7 @@ describe Account do
 
   end
 
-  describe '#create_statement' do
+  context "getting account statements" do
 
     let!(:deposit) { double(credit: 1000.00, debit: nil, date: Date.new(2012,1,10), account_balance: 1000.00) }
     let!(:big_deposit) { double(credit: 2000.00, debit: nil, date: Date.new(2012,1,13), account_balance: 3000.00) }
@@ -67,6 +67,8 @@ describe Account do
     let!(:formatter_spy) { spy("A formatter spy") }
 
     let!(:busy_account) { described_class.new({}) }
+
+  describe '#create_statement' do
 
     it 'should create a new StatementFormatter object' do
       busy_account.transactions.push(deposit, big_deposit, withdrawal)
@@ -78,14 +80,6 @@ describe Account do
 
   describe '#print_statement' do
 
-    let!(:deposit) { double(credit: 1000.00, debit: nil, date: Date.new(2012,1,10), account_balance: 1000.00) }
-    let!(:big_deposit) { double(credit: 2000.00, debit: nil, date: Date.new(2012,1,13), account_balance: 3000.00) }
-    let!(:withdrawal) { double(credit: nil, debit: 500.00, date: Date.new(2012,1,14), account_balance: 2500.00) }
-
-    let!(:formatter_spy) { spy("A formatter spy") }
-
-    let!(:busy_account) { described_class.new({}) }
-
     it 'should send the print message to the statement formatter' do
       busy_account.transactions.push(deposit, big_deposit, withdrawal)
       busy_account.print_statement(formatter_spy)
@@ -93,5 +87,7 @@ describe Account do
     end
 
   end
+
+end
 
 end
