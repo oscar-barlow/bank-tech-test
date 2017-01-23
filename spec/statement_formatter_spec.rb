@@ -10,12 +10,26 @@ describe StatementFormatter do
 
   let!(:statement) {described_class.new(transactions)}
 
-  it 'should initialize with an array of transactions' do
-    expect(statement.transactions).to_not be_empty
+  describe '#initialize' do
+    it 'should initialize with an array of transactions' do
+      expect(statement.transactions).to_not be_empty
+    end
   end
 
-  it 'should sort the transactions reverse chronologically' do
-    expect(statement.sort_transactions[0]).to eq withdrawal
+  describe '#sort_transactions' do
+
+    it 'should sort the transactions reverse chronologically' do
+      expect(statement.sort_transactions[0]).to eq withdrawal
+    end
+
+  end
+
+  describe '#print' do
+
+    it 'should print the formatted transaction data' do
+      expect(statement.print).to eq "date       || credit || debit   || balance\n14/01/2012 ||        || 500.00  || 2500.00 \n13/01/2012 || 2000.00||         || 3000.00 \n10/01/2012 || 1000.00||         || 1000.00 \n"
+    end
+
   end
 
 end
