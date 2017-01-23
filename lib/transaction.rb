@@ -7,4 +7,5 @@ class Transaction
     @date = args[:date]
     @account_balance = args[:account_balance]
   end
+  
 end
