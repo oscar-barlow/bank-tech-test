@@ -70,7 +70,7 @@ describe Account do
 
     let!(:busy_account) { described_class.new({}) }
 
-    xit 'should output a nicely formatted statement' do
+    it 'should output a nicely formatted statement' do
       busy_account.transactions.push(deposit, big_deposit, withdrawal)
       expect(busy_account.statement).to eq <<-STATEMENT
       date       || credit || debit   || balance
