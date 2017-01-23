@@ -2,7 +2,7 @@ require 'transaction'
 
 describe Transaction do
 
-  let!(:day) {double("Day of the transaction")}
+  let!(:day) { double("Day of the transaction") }
   let!(:transaction) { described_class.new(amount: 300, date: day, account_balance: 700) }
 
   describe '#initialize' do
