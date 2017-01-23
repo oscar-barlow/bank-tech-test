@@ -41,7 +41,7 @@ describe Account do
     end
 
     it 'should send transaction details to the transactions array' do
-      expect(transaction_spy).to have_received(:new).with(amount: 100, date: Date.today, account_balance: 900)
+      expect(transaction_spy).to have_received(:new).with(amount: 100, date: Date.today, account_balance: 900, type: :debit)
     end
 
   end
@@ -57,7 +57,7 @@ describe Account do
     end
 
     it 'should send transaction details to the transactions array' do
-      expect(transaction_spy).to have_received(:new).with(amount: 500, date: Date.today, account_balance: 1500)
+      expect(transaction_spy).to have_received(:new).with(amount: 500, date: Date.today, account_balance: 1500, type: :credit)
     end
 
   end
@@ -71,7 +71,13 @@ describe Account do
     let!(:busy_account) { described_class.new({}) }
 
     xit 'should output a nicely formatted statement' do
-      expect(busy_account.statement).to eq
+      busy_account.transactions.push(deposit, big_deposit, withdrawal)
+      expect(busy_account.statement).to eq <<-STATEMENT
+      date       || credit || debit   || balance
+      14/01/2012 ||        || 500.00  || 2500.00
+      13/01/2012 || 2000.00||         || 3000.00
+      10/01/2012 || 1000.00||         || 1000.00
+      STATEMENT
     end
 
   end
