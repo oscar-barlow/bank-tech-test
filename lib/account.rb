@@ -10,16 +10,16 @@ class Account
 
   def withdraw(amount, transaction_klass)
     self.balance -= amount
-    create_transaction(amount, transaction_klass, :debit)
+    create_transaction({debit: amount}, transaction_klass)
   end
 
   def deposit(amount, transaction_klass)
     self.balance += amount
-    create_transaction(amount, transaction_klass, :credit)
+    create_transaction({credit: amount}, transaction_klass)
   end
 
-  def create_transaction(amount, transaction_klass, type)
-    transaction = transaction_klass.new(amount: amount, date: Date.today, account_balance: self.balance, type: type)
+  def create_transaction(args, transaction_klass)
+    transaction = transaction_klass.new(credit: args[:credit], debit: args[:debit], date: Date.today, account_balance: self.balance)
     self.transactions << transaction
   end
 
@@ -35,7 +35,7 @@ class Account
       end
       statement += line
     end
-    
+
     statement
   end
 
